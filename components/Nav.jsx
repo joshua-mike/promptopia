@@ -5,13 +5,16 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
-const Nav = () => {
-  const isUserLoggedIn = true;
+const Nav = () =>
+{
+  const isUserLoggedIn = false;
   const [providers, setProviders] = useState(null);
-  const [toggleDropDown, setToggleDropDown] = useState(second)(false);
+  const [toggleDropDown, setToggleDropDown] = useState(true);
 
-  useEffect(() => {
-    const setProviders = async () => {
+  useEffect(() =>
+  {
+    const setProviders = async () =>
+    {
       const providers = await getProviders();
       setProviders(providers);
     };
@@ -89,7 +92,8 @@ const Nav = () => {
                   <button
                     type="button"
                     href="/profile"
-                    onClick={() => {
+                    onClick={() =>
+                    {
                       setToggleDropDown(false);
                       signOut();
                     }}
