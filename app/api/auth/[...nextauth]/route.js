@@ -22,8 +22,14 @@ const handler = NextAuth({
         try
         {
             await connectToDB();
-            // check if new users exists
-            // if not, create a new user
+            if (this.session.user.email === profile.email)
+            {
+                return true;
+            }
+            else
+            {
+                createNewUser(profile);
+            }
             return true;
         }
         catch (error)
