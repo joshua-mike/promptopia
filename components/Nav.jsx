@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () =>
@@ -16,8 +16,8 @@ const Nav = () =>
   {
     const setUpProviders = async () =>
     {
-      const providers = await getProviders();
-      setProviders(providers);
+      const response = await getProviders();
+      setProviders(response);
     };
     setUpProviders();
   }, []);
@@ -39,14 +39,14 @@ const Nav = () =>
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
-              Create Post
+              Create Prompt
             </Link>
             <button type="button" onClick={signOut} className="outline_btn">
               Sign Out
             </button>
             <Link href="/profile">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full"
@@ -60,8 +60,11 @@ const Nav = () =>
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
-                  onClick={() => signIn(provider.id)}
                   key={provider.name}
+                  onClick={() =>
+                  {
+                    signIn(provider.id)
+                  }}
                   className="black_btn"
                 >
                   Sign In
@@ -71,16 +74,17 @@ const Nav = () =>
         )}
       </div>
 
+      {/* Mobile navigation */}
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               width={37}
               height={37}
               className="rounded-full"
               alt="profile"
-              onClick={() => setToggleDropDown((prev) => !prev)}
+              onClick={() => setToggleDropDown(!toggleDropDown)}
             />
             {toggleDropDown && (
               <div className="dropdown">
@@ -89,11 +93,17 @@ const Nav = () =>
                   className="dropdown_link"
                   onClick={() => setToggleDropDown(false)}
                 >
+                  My Profile
+                </Link>
+                <Link
+                  href="/create-prompt"
+                  className="dropdown_link"
+                  onClick={() => setToggleDropDown(false)}
+                >
                   Create Prompt
                 </Link>
                 <button
                   type="button"
-                  href="/profile"
                   onClick={() =>
                   {
                     setToggleDropDown(false);
@@ -112,7 +122,7 @@ const Nav = () =>
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
-                  onClick={() => signIn(provider.id)}
+                  onClick={() => { signIn(provider.id) }}
                   key={provider.name}
                   className="black_btn"
                 >
