@@ -13,7 +13,6 @@ const RootLayout = ({ children }) =>
     <html lang="en">
       <body>
         <Provider>
-          {children}
           <div className="main">
             <div className="gradient" />
           </div>
