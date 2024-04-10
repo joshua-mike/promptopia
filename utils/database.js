@@ -16,8 +16,6 @@ export const connectToDB = async () =>
       dbName: "share_prompt",
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
     });
     IsConnected = true;
     console.log("MongoDB is connected");
