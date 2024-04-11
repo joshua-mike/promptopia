@@ -18,7 +18,7 @@ const CreatePrompt = () =>
     }
     return (
         <Form
-            type='create-prompt'
+            type='Create'
             post={post}
             setPost={setPost}
             submitting={submitting}
