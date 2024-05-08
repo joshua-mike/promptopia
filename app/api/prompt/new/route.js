@@ -1,19 +1,20 @@
 import { connectToDB } from "@utils/database";
+import Prompt from "@models/prompt";
 
 export const POST = async (req) =>
 {
-    const {
-        prompt,
-        userId,
-        tag
-    } = await req.json();
+    const { prompt, userId, tag } = await req.json();
 
     try
     {
         await connectToDB();
-    } catch (error)
+        const newPrompt = new Prompt({ creator: userId, prompt, tag })
+        await newPrompt.save();
+        return new Response(json.stringify(newPrompt), { status: 201 });
+    }
+    catch (error)
     {
-        console.error("Error connecting to MongoDB", error);
-        return false;
+        console.error("Failed to create new prompt.", error);
+        return new Response("Failed to create new prompt.", { status: 500 });
     }
 };
