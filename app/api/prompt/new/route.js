@@ -10,7 +10,7 @@ export const POST = async (req) =>
         await connectToDB();
         const newPrompt = new Prompt({ creator: userId, prompt, tag })
         await newPrompt.save();
-        return new Response(json.stringify(newPrompt), { status: 201 });
+        return new Response(JSON.stringify(newPrompt), { status: 201 });
     }
     catch (error)
     {

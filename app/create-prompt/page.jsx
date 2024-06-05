@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Form from '@components/form';
-import { set } from 'mongoose';
 
 const CreatePrompt = () =>
 {
@@ -12,18 +11,19 @@ const CreatePrompt = () =>
     const { data: session } = useSession();
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
-        prompt: '',
-        tag: '',
+        prompt: "",
+        tag: "",
     });
     const createPrompt = async (e) =>
     {
-        e.PreventDefault();
+        //e.PreventDefault();
         setSubmitting(true);
 
         try
         {
-            const response = await fetch('/api/prompt/new', {
-                method: 'POST',
+            console.log("Executing createPrompt...");
+            const response = await fetch("/api/prompt/new", {
+                method: "POST",
                 body: JSON.stringify({
                     prompt: post.prompt,
                     userId: session?.user.id,
@@ -35,21 +35,22 @@ const CreatePrompt = () =>
             {
                 router.push('/');
             }
+            console.log(response.stringify());
 
             setPost({
                 prompt: '',
                 tag: '',
             });
             setSubmitting(false);
-            router.push('/');
         }
         catch (error)
         {
-            console.error(error);
+            console.log(error);
         }
         finally
         {
             setSubmitting(false);
+            console.log("createPrompt executed.");
         }
     }
     return (

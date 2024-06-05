@@ -7,14 +7,14 @@ const promptSchema = new Schema({
     },
     prompt: {
         type: String,
-        required: [prompt, 'Prompt is required'],
+        required: [prompt, "Prompt is required"],
     },
     tag: {
         type: String,
-        required: [tag, 'Tag is required'],
+        required: [tag, "Tag is required"],
     },
 
 });
 
-const Prompt = models.Prompt || model('Prompt', PromptSchema);
+const Prompt = models.prompt || model('prompt', promptSchema);
 export default Prompt;
