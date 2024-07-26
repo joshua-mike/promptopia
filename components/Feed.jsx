@@ -1,16 +1,16 @@
 
 'use client';
-
 import { useState, useEffect } from "react"
 import PromptCard from "./PromptCard";
+
 const PromptCardList = ({ data, handleTagClick }) =>
 {
   return (
     <div className="mt-16 prompt_layout">
-      {data.map((post) => (
+      {data.map((posts) => (
         <PromptCard
-          key={post.id}
-          post={post}
+          key={posts._id}
+          post={posts}
           handleTagClick={handleTagClick}
         />
       ))}
@@ -23,11 +23,12 @@ const Feed = () =>
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
   const handleSearchChange = (e) => { };
+
   useEffect(() =>
   {
     const fetchPosts = async () =>
     {
-      const response = await fetch("/api/prompt");
+      const response = await fetch('/api/prompt');
       const data = await response.json();
       setPosts(data);
     }
