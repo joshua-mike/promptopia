@@ -21,7 +21,6 @@ const PromptCardList = ({ data, handleTagClick }) =>
 const Feed = () =>
 {
   const [posts, setPosts] = useState([]);
-
   const [searchText, setSearchText] = useState('');
   const handleSearchChange = (e) => { };
 
@@ -37,7 +36,6 @@ const Feed = () =>
     fetchPosts();
   }, []);
 
-
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -50,11 +48,11 @@ const Feed = () =>
           className="search_input peer"
         />
       </form>
+
       <PromptCardList
         data={posts}
         handleTagClick={() => { }}
       />
-
     </section>
   )
 }
