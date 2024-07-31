@@ -7,12 +7,22 @@ import { usePathname, useRouter } from 'next/navigation';
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
 {
+  const { data: session } = useSession();
   const [copied, setCopied] = useState("");
+  const router = useRouter();
+  const handleProfileClick = () =>
+  {
+    console.log(post);
+    if (post.creator._id === session?.user.id) return router.push('/profile');
+    router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+  };
+
+
   const handleCopy = () =>
   {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
-    setTimeout(() => setCopied(""), 3000);
+    setTimeout(() => setCopied(false), 3000);
   }
 
   return (
@@ -25,6 +35,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
             width={40}
             height={40}
             className='rounded-full object-contain'
+            onClick={handleProfileClick}
           />
           <div className='flex flex-col'>
             <h3 className='font-satoshi font-semibold text-gray-900'>
