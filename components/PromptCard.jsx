@@ -16,7 +16,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
 
-  console.log("Check post data creator id -" + post.creator + " Session id -" + session?.user.id);
+  console.log("Check post data creator: " + post.creator.username + " Id: " + post.creator._id);
 
   const handleCopy = () =>
   {
