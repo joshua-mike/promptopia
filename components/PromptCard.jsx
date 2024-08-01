@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathName, useRouter } from 'next/navigation';
 
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
@@ -12,11 +12,11 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
   const router = useRouter();
   const handleProfileClick = () =>
   {
-    console.log(post);
     if (post.creator._id === session?.user.id) return router.push('/profile');
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
 
+  console.log("Check post data creator id -" + post.creator + " Session id -" + session?.user.id);
 
   const handleCopy = () =>
   {
@@ -50,6 +50,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
         <div className='copy-btn' onClick={() => { handleCopy }}>
           <Image
             src={copied === post.prompt ? 'assets/icons/tick.svg' : 'assets/icons/copy.svg'}
+            alt='user_image'
             width={12}
             height={12}
           />
