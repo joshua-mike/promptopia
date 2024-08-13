@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Profile from '@components/Profile';
-import { data } from "autoprefixer";
+import { data } from 'autoprefixer';
 
 const MyProfile = () =>
 {
@@ -15,7 +15,7 @@ const MyProfile = () =>
     {
         const fetchPosts = async () =>
         {
-            const response = await fetch('/api/users/${session?.user.id}/posts');
+            const response = await fetch(`/api/users/${session?.user.id}/posts`);
             const data = await response.json();
             setPosts(data);
         }
