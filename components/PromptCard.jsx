@@ -2,22 +2,20 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { usePathName, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
 {
   const { data: session } = useSession();
-  const pathName = usePathName;
-  const [copied, setCopied] = useState("");
   const router = useRouter();
+  const pathName = usePathname();
+  const [copied, setCopied] = useState("");
   const handleProfileClick = () =>
   {
     if (post.creator._id === session?.user.id) return router.push('/profile');
     router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
   };
-
-  console.log("Check post data creator: " + post.creator.username + " Id: " + post.creator._id);
 
   const handleCopy = () =>
   {
@@ -63,6 +61,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
       <p className='font-inter text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(post.tag)}>
         {post.tag}
       </p>
+      {console.log("Check session ID: " + session?.user.id + " and Creator Id: " + post.creator._id + " and pathName: " + pathName)}
       {session?.user.id === post.creator._id && pathName === '/profile' && (
         <div>
           <p
