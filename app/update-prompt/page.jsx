@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Form from '@components/form';
@@ -7,13 +6,13 @@ import Form from '@components/form';
 const EditPrompt = () =>
 {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const promptId = searchParams.get('id');
     const [submitting, setSubmitting] = useState(false);
     const [post, setPost] = useState({
         prompt: "",
         tag: "",
     });
-    const searchParams = useSearchParams();
-    const promptId = searchParams.get('id');
 
     useEffect(() =>
     {
@@ -30,34 +29,32 @@ const EditPrompt = () =>
 
     }, [promptId]);
 
-    const editedPrompt = async (e) =>
+    const updatePrompt = async (e) =>
     {
-        //e.PreventDefault();
+        e.preventDefault();
         setSubmitting(true);
+        if (!promptId) return alert("Prompt ID not found.");
 
         try
         {
-            console.log("Executing createPrompt...");
-            const response = await fetch("/api/prompt/new", {
-                method: "POST",
+            const response = await fetch(`/api/prompt/${promptId}`, {
+                method: "PATCH",
                 body: JSON.stringify({
                     prompt: post.prompt,
-                    userId: session?.user.id,
                     tag: post.tag
-                }),
+                })
             });
 
             if (response.ok)
             {
                 router.push('/');
             }
-            console.log(response.stringify());
 
-            setPost({
-                prompt: '',
-                tag: '',
-            });
-            setSubmitting(false);
+            // setPost({
+            //     prompt: '',
+            //     tag: '',
+            // });
+            // setSubmitting(false);
         }
         catch (error)
         {
@@ -66,7 +63,7 @@ const EditPrompt = () =>
         finally
         {
             setSubmitting(false);
-            console.log("createPrompt executed.");
+            console.log("Prompt edit executed.");
         }
     }
     return (
@@ -76,7 +73,7 @@ const EditPrompt = () =>
             setPost={setPost}
             submitting={submitting}
             setSubmitting={setSubmitting}
-            handleSubmit={editedPrompt}
+            handleSubmit={updatePrompt}
         />
     );
 };
