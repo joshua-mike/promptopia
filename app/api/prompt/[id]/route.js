@@ -42,13 +42,12 @@ export const PATCH = async (request, { params }) =>
 
 export const DELETE = async (request, { params }) =>
 {
-
     try
     {
         await connectToDB();
         const existingPrompt = await Prompt.findById(params.id);
         if (!existingPrompt) return new Response("Prompt not found.", { status: 404 });
-        await existingPrompt.remove();
+        await Prompt.findByIdAndDelete(params.id);
         return new Response("Prompt deleted.", { status: 200 });
     }
     catch (error)

@@ -29,7 +29,29 @@ const MyProfile = () =>
         router.push(`/update-prompt?id=${posts._id}`);
     };
 
-    const handleDelete = async (posts) => { };
+    const handleDelete = async (posts) =>
+    {
+        const hasConfirmed = confirm('Are you sure you want to delete this pompt?');
+
+        if (hasConfirmed)
+        {
+            try
+            {
+                await fetch(`/api/prompt/${posts._id.toString()}`, {
+                    method: 'DELETE'
+                });
+
+                const filteredPosts = posts.filter((p) => p._id !== posts._id);
+                setPosts(filteredPosts);
+
+            } catch (error)
+            {
+                console.log('Failed to delete prompt', error);
+            }
+        }
+
+
+    };
 
     return (
         <Profile
