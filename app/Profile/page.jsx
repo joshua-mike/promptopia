@@ -41,8 +41,16 @@ const MyProfile = () =>
                     method: 'DELETE'
                 });
 
-                const filteredPosts = posts.filter((p) => p._id !== posts._id);
-                setPosts(filteredPosts);
+                if (Array.isArray(posts))
+                {
+                    const filteredPosts = posts.filter((p) => p._id !== posts._id);
+                    setPosts(filteredPosts);
+                }
+                else
+                {
+                    console.log('Posts variable is not an array.');
+                    setPosts([]);
+                }
 
             } catch (error)
             {
