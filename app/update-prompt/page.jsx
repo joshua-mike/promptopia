@@ -49,12 +49,6 @@ const EditPrompt = () =>
             {
                 router.push('/');
             }
-
-            // setPost({
-            //     prompt: '',
-            //     tag: '',
-            // });
-            // setSubmitting(false);
         }
         catch (error)
         {

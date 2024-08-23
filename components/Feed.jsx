@@ -20,7 +20,7 @@ const PromptCardList = ({ data, handleTagClick }) =>
 
 const Feed = () =>
 {
-  const [posts, setPosts] = useState([]);
+  const [post, setPosts] = useState([]);
   const [searchText, setSearchText] = useState('');
   const handleSearchChange = (e) => { };
 
@@ -50,7 +50,7 @@ const Feed = () =>
       </form>
 
       <PromptCardList
-        data={posts}
+        data={post}
         handleTagClick={() => { }}
       />
     </section>
