@@ -41,7 +41,7 @@ const Feed = () =>
     {
       const filteredPrompt = filteredPosts(input.target.value);
       setSearchedResults(filteredPrompt);
-    }, 500))
+    }, 1))
   };
 
   const filteredPosts = (text) =>
@@ -56,7 +56,13 @@ const Feed = () =>
 
   const handleTagClick = (tag) =>
   {
+    clearTimeout(searchTimeOut);
     setSearchText(tag);
+    setSearchTimeOut(setTimeout(() =>
+    {
+      const filteredPrompt = filteredPosts(tag);
+      setSearchedResults(filteredPrompt);
+    }, 1))
   }
 
   useEffect(() =>
@@ -76,12 +82,8 @@ const Feed = () =>
           className="search_input peer"
         />
       </form>
-      {searchText ? (
-        <PromptCardList
-          data={searchedResults}
-          handleTagClick={handleTagClick}
-        />
-      ) : (<PromptCardList data={posts} handleTagClick={handleTagClick} />)}
+      {searchText ? (<PromptCardList data={searchedResults} handleTagClick={handleTagClick} />)
+        : (<PromptCardList data={posts} handleTagClick={handleTagClick} />)}
     </section>
   )
 }
