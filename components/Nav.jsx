@@ -20,6 +20,7 @@ const Nav = () =>
       setProviders(response);
     };
     setUpProviders();
+
   }, []);
 
   return (
@@ -122,7 +123,10 @@ const Nav = () =>
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
-                  onClick={() => { signIn(provider.id) }}
+                  onClick={() =>
+                  {
+                    signIn("email");
+                  }}
                   key={provider.name}
                   className="black_btn"
                 >
