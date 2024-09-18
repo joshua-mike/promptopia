@@ -4,7 +4,20 @@ const nextConfig = {
         serverComponentsExternalPackages: ['mongoose'],
     },
     images: {
-        domains: ['lh3.googleusercontent.com'],
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: 'lh3.googleusercontent.com',
+            },
+            {
+                protocol: "https",
+                hostname: "replicate.com",
+            },
+            {
+                protocol: "https",
+                hostname: "replicate.delivery",
+            },
+        ],
     },
     webpack(config)
     {
@@ -13,7 +26,7 @@ const nextConfig = {
             topLevelAwait: true,
         }
         return config
-    }
+    },
 }
 
 module.exports = nextConfig

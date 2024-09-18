@@ -16,7 +16,6 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
     if (post.creator._id === session?.user.id)
     {
       console.log(`Logged in user ID: ${post.creator._id} Name: ${post.creator.username}`);
-      //router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
       return router.push('/profile')
     }
     else if (post.creator._id !== session?.user.id)

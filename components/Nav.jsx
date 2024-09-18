@@ -33,7 +33,7 @@ const Nav = () =>
           className="object-contain"
           alt="Promptopia Logo"
         />
-        <p className="logo_text">Promptopia</p>
+        <p className="logo_text">Promptlicate</p>
       </Link>
 
       <div className="sm:flex hidden">
