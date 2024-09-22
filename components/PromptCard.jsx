@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
+import { showModal } from './ImageModal';
+import { HandleGeneratePrediction } from './ImageModalFunctions';
 
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
@@ -11,6 +13,9 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
   const router = useRouter();
   const pathName = usePathname();
   const [copied, setCopied] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  var prompt = post.prompt;
+
   const handleProfileClick = () =>
   {
     if (post.creator._id === session?.user.id)
@@ -57,7 +62,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
 
         <div className='copy_btn' onClick={handleCopy}>
           <Image
-            src={copied === post.prompt ? 'assets/icons/tick.svg' : 'assets/icons/copy.svg'}
+            src={copied === prompt ? 'assets/icons/tick.svg' : 'assets/icons/copy.svg'}
             alt='user_image'
             width={12}
             height={12}
@@ -65,7 +70,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
         </div>
       </div>
       <p className='my-4 font-satoshi text-sm text-gray-700'>
-        {post.prompt}
+        {prompt}
       </p>
       <p className='font-inter text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(post.tag)}>
         #{post.tag}
@@ -76,6 +81,9 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
             className='font-inter text-sm green_gradient cursor-pointer'
             onClick={handleEdit}
           >Edit</p>
+          <p className='font-inter text-sm blue_gradient cursor-pointer'
+            onClick={() => showModal && setShowModal(true)}
+          >Generate Image</p>
           <p
             className='font-inter text-sm orange_gradient cursor-pointer'
             onClick={handleDelete}
