@@ -1,6 +1,6 @@
 export async function HandleGeneratePrediction(_prompt) 
 {
-    //e.preventDefault();
+    console.log("Executing replicate prediction");
     const response = await fetch("/api/predictions", {
         method: "POST",
         headers: {
@@ -20,7 +20,8 @@ export async function HandleGeneratePrediction(_prompt)
     }
     else if (response.status === 201)
     {
-        console.log("Prediction created successfully");
+        console.log("Prediction created successfully", prediction.detail);
+        console.log("Prediction status:", prediction.status);
         return prediction;
     }
 
@@ -29,6 +30,7 @@ export async function HandleGeneratePrediction(_prompt)
         prediction.status !== "failed"
     )
     {
+        console.log("Waiting for prediction to complete");
         await sleep(1000);
         const response = await fetch("/api/predictions/" + prediction.id);
         prediction = await response.json();
@@ -37,7 +39,7 @@ export async function HandleGeneratePrediction(_prompt)
             setError(prediction.detail);
             return;
         }
-        console.log({ prediction: prediction });
+        console.log("While loop prediction status:", prediction.status);
         return prediction;
     }
 };

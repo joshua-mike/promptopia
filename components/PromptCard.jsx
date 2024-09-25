@@ -3,11 +3,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
-import { showModal } from './ImageModal';
-import { HandleGeneratePrediction } from './ImageModalFunctions';
 
 
-const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
+const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, handleShowModal }) =>
 {
   const { data: session } = useSession();
   const router = useRouter();
@@ -82,7 +80,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
             onClick={handleEdit}
           >Edit</p>
           <p className='font-inter text-sm blue_gradient cursor-pointer'
-            onClick={() => showModal && setShowModal(true)}
+            onClick={handleShowModal}
           >Generate Image</p>
           <p
             className='font-inter text-sm orange_gradient cursor-pointer'

@@ -1,7 +1,8 @@
 
 import PromptCard from "./PromptCard";
+import ImageModal from "./ImageModal";
 
-const Profile = ({ name, desc, data, handleEdit, handleDelete }) =>
+const Profile = ({ name, desc, data, showModal, handleEdit, handleDelete, handleShowModal }) =>
 {
   return (
     <section className="w-full">
@@ -9,6 +10,13 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) =>
         <span className="blue_gradient">{name} Prompt Library</span>
       </h1>
       <p className="desc text-left">{desc}</p>
+
+      <ImageModal
+        show={true}
+        handleShowModal={() => handleShowModal()}
+        onClose={() => setShowModal(false)}
+        prompt={"generate industrial looking house in the mountains surrounded by trees"}
+      />
 
       <div className="mt-10 prompt_layout">
         {data.map((post) => (
@@ -18,9 +26,10 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) =>
             handleEdit={() => handleEdit && handleEdit(post)}
             handleDelete={() => handleDelete && handleDelete(post)}
           />
-        ))}
-      </div>
+        ))
 
+        }
+      </div>
     </section>
   )
 }

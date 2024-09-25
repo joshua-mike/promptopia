@@ -9,6 +9,7 @@ const MyProfile = () =>
     const router = useRouter();
     const { data: session } = useSession();
     const [posts, setPosts] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() =>
     {
@@ -27,6 +28,12 @@ const MyProfile = () =>
     {
         router.push(`/update-prompt?id=${posts._id}`);
     };
+
+    const handleShowModal = () =>
+    {
+        setShowModal(true);
+        console.log('Attempting to show modal.');
+    }
 
     const handleDelete = async (posts) =>
     {
@@ -65,8 +72,10 @@ const MyProfile = () =>
             name='My'
             desc='Welcome to your personalized profile page'
             data={posts}
+            showModal={showModal}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            handleShowModal={handleShowModal}
         />
     );
 };

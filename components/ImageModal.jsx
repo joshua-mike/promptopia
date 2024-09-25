@@ -1,9 +1,13 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { HandleGeneratePrediction } from './ImageModalFunctions';
-import { prompt } from './PromptCard';
+import Image from 'next/image';
+import { set } from 'mongoose';
 
 const ImageModal = ({ show, onClose, prompt }) =>
 {
+    console.log('ImageModal component rendered');
+    const [prediction, setPrediction] = useState();
+
     useEffect(() =>
     {
         const handleEsc = (event) =>
@@ -24,15 +28,17 @@ const ImageModal = ({ show, onClose, prompt }) =>
     }
     else
     {
-        var imageSrc = HandleGeneratePrediction(prompt);
+        console.log('Generating replicate prediction for prompt:', prompt);
+        var imageData = HandleGeneratePrediction(prompt);
+        setPrediction(imageData);
     }
 
     return (
-        <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center' onClick={onClose}>
-            <div className='w-[600px]' onClick={(e) => e.stopPropagation()}>
+        <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-50' onClick={onClose}>
+            <div className='w-[600px]' >
                 <div className='prompt_card'>
                     <Image
-                        src={imageSrc}
+                        src={prediction.output[prediction.output.length - 1]}
                         alt='image'
                         layout='responsive'
                         width={768}
