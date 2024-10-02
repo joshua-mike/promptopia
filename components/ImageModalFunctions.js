@@ -1,28 +1,35 @@
+import { set } from "mongoose";
+import { useState } from "react";
+
 export async function HandleGeneratePrediction(_prompt) 
 {
+    const [prediction, setPrediction] = useState(null);
+    const [error, setError] = useState(null);
+
     console.log("Executing replicate prediction");
-    const response = await fetch("/api/predictions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            prompt: _prompt,
-        }),
-    });
-    let prediction = await response.json();
+    const response = await fetch("/api/predictions",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                prompt: _prompt,
+            }),
+        });
+    let predictionObject = await response.json();
+    setPrediction(predictionObject);
 
     if (response.status !== 201)
     {
         console.log("Replicate API error:", prediction.detail);
         setError(prediction.detail);
-        return null;
+        return;
     }
     else if (response.status === 201)
     {
-        console.log("Prediction created successfully", prediction.detail);
-        console.log("Prediction status:", prediction.status);
-        return prediction;
+        console.log("Prediction requested. Prediction status:", prediction.status);
+        setPrediction(prediction);
     }
 
     while (
@@ -33,13 +40,13 @@ export async function HandleGeneratePrediction(_prompt)
         console.log("Waiting for prediction to complete");
         await sleep(1000);
         const response = await fetch("/api/predictions/" + prediction.id);
-        prediction = await response.json();
+        predictionObject = await response.json();
+        setPrediction(predictionObject);
         if (response.status !== 200)
         {
             setError(prediction.detail);
             return;
         }
         console.log("While loop prediction status:", prediction.status);
-        return prediction;
     }
 };

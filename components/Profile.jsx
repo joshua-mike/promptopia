@@ -11,12 +11,12 @@ const Profile = ({ name, desc, data, showModal, handleEdit, handleDelete, handle
       </h1>
       <p className="desc text-left">{desc}</p>
 
-      <ImageModal
-        show={true}
+      {/* <ImageModal
+        show={showModal}
         handleShowModal={() => handleShowModal()}
         onClose={() => setShowModal(false)}
         prompt={"generate industrial looking house in the mountains surrounded by trees"}
-      />
+      /> */}
 
       <div className="mt-10 prompt_layout">
         {data.map((post) => (
@@ -25,6 +25,7 @@ const Profile = ({ name, desc, data, showModal, handleEdit, handleDelete, handle
             post={post}
             handleEdit={() => handleEdit && handleEdit(post)}
             handleDelete={() => handleDelete && handleDelete(post)}
+            handleShowModal={() => handleShowModal && handleShowModal(post)}
           />
         ))
 

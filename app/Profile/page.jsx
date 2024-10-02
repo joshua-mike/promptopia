@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Profile from '@components/Profile';
+import ImageModal from '@components/ImageModal';
 
 const MyProfile = () =>
 {
@@ -10,6 +11,10 @@ const MyProfile = () =>
     const { data: session } = useSession();
     const [posts, setPosts] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const refreshPage = () =>
+    {
+        router.replace(router.asPath);
+    }
 
     useEffect(() =>
     {
@@ -33,6 +38,14 @@ const MyProfile = () =>
     {
         setShowModal(true);
         console.log('Attempting to show modal.');
+        refreshPage();
+
+        // return (<ImageModal
+        //     show={showModal}
+        //     handleShowModal={() => handleShowModal()}
+        //     onClose={() => setShowModal(false)}
+        //     prompt={"generate industrial looking house in the mountains surrounded by trees"}
+        // />);
     }
 
     const handleDelete = async (posts) =>
@@ -63,11 +76,9 @@ const MyProfile = () =>
                 console.log('Failed to delete prompt', error);
             }
         }
-
-
     };
 
-    return (
+    return (showModal ? <ImageModal show={showModal} handleShowModal={() => handleShowModal()} onClose={() => setShowModal(false)} prompt={"generate industrial looking house in the mountains surrounded by trees"} /> :
         <Profile
             name='My'
             desc='Welcome to your personalized profile page'

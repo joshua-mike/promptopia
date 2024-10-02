@@ -29,8 +29,7 @@ const ImageModal = ({ show, onClose, prompt }) =>
     else
     {
         console.log('Generating replicate prediction for prompt:', prompt);
-        var imageData = HandleGeneratePrediction(prompt);
-        setPrediction(imageData);
+        setPrediction(HandleGeneratePrediction(prompt).prediction);
     }
 
     return (

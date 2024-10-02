@@ -11,7 +11,6 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, handleShow
   const router = useRouter();
   const pathName = usePathname();
   const [copied, setCopied] = useState("");
-  const [showModal, setShowModal] = useState(false);
   var prompt = post.prompt;
 
   const handleProfileClick = () =>
