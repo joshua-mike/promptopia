@@ -3,33 +3,22 @@ import { useState } from "react";
 
 export async function HandleGeneratePrediction(_prompt) 
 {
-    const [prediction, setPrediction] = useState(null);
-    const [error, setError] = useState(null);
-
     console.log("Executing replicate prediction");
-    const response = await fetch("/api/predictions",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                prompt: _prompt,
-            }),
-        });
-    let predictionObject = await response.json();
-    setPrediction(predictionObject);
+    let response = await fetch("/api/predictions", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            prompt: _prompt,
+        }),
+    });
+    let prediction = await response.json();
 
     if (response.status !== 201)
     {
         console.log("Replicate API error:", prediction.detail);
-        setError(prediction.detail);
-        return;
-    }
-    else if (response.status === 201)
-    {
-        console.log("Prediction requested. Prediction status:", prediction.status);
-        setPrediction(prediction);
+        throw new Error(prediction.detail);
     }
 
     while (
@@ -38,15 +27,15 @@ export async function HandleGeneratePrediction(_prompt)
     )
     {
         console.log("Waiting for prediction to complete");
-        await sleep(1000);
-        const response = await fetch("/api/predictions/" + prediction.id);
-        predictionObject = await response.json();
-        setPrediction(predictionObject);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        response = await fetch("/api/predictions/" + prediction.id);
+        prediction = await response.json();
         if (response.status !== 200)
         {
-            setError(prediction.detail);
-            return;
+            throw new Error(prediction.detail);
         }
         console.log("While loop prediction status:", prediction.status);
     }
-};
+
+    return prediction;
+}

@@ -79,7 +79,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, handleShow
             onClick={handleEdit}
           >Edit</p>
           <p className='font-inter text-sm blue_gradient cursor-pointer'
-            onClick={handleShowModal}
+            onClick={() => handleShowModal(post)}
           >Generate Image</p>
           <p
             className='font-inter text-sm orange_gradient cursor-pointer'

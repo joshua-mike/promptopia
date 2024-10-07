@@ -1,9 +1,8 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Profile from '@components/Profile';
-import ImageModal from '@components/ImageModal';
 
 const MyProfile = () =>
 {
@@ -11,6 +10,7 @@ const MyProfile = () =>
     const { data: session } = useSession();
     const [posts, setPosts] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [currentPost, setCurrentPost] = useState(null);
     const refreshPage = () =>
     {
         router.replace(router.asPath);
@@ -34,19 +34,19 @@ const MyProfile = () =>
         router.push(`/update-prompt?id=${posts._id}`);
     };
 
-    const handleShowModal = () =>
+    const handleShowModal = useCallback((post) =>
     {
+        setCurrentPost(post);
         setShowModal(true);
         console.log('Attempting to show modal.');
-        refreshPage();
+    }, []);
 
-        // return (<ImageModal
-        //     show={showModal}
-        //     handleShowModal={() => handleShowModal()}
-        //     onClose={() => setShowModal(false)}
-        //     prompt={"generate industrial looking house in the mountains surrounded by trees"}
-        // />);
-    }
+    const onClose = useCallback(() =>
+    {
+        setShowModal(false);
+        setCurrentPost(null);
+        console.log('Modal closed.');
+    }, []);
 
     const handleDelete = async (posts) =>
     {
@@ -78,15 +78,17 @@ const MyProfile = () =>
         }
     };
 
-    return (showModal ? <ImageModal show={showModal} handleShowModal={() => handleShowModal()} onClose={() => setShowModal(false)} prompt={"generate industrial looking house in the mountains surrounded by trees"} /> :
+    return (
         <Profile
             name='My'
             desc='Welcome to your personalized profile page'
             data={posts}
             showModal={showModal}
+            onClose={onClose}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
             handleShowModal={handleShowModal}
+            currentPost={currentPost}
         />
     );
 };
