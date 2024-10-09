@@ -11,10 +11,6 @@ const MyProfile = () =>
     const [posts, setPosts] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [currentPost, setCurrentPost] = useState(null);
-    const refreshPage = () =>
-    {
-        router.replace(router.asPath);
-    }
 
     useEffect(() =>
     {
@@ -78,6 +74,21 @@ const MyProfile = () =>
         }
     };
 
+    const handleEditWrapper = useCallback((post) =>
+    {
+        return () => handleEdit && handleEdit(post);
+    }, [handleEdit]);
+
+    const handleDeleteWrapper = useCallback((post) =>
+    {
+        return () => handleDelete && handleDelete(post);
+    }, [handleDelete]);
+
+    const handleShowModalWrapper = useCallback((post) =>
+    {
+        return () => handleShowModal && handleShowModal(post);
+    }, [handleShowModal]);
+
     return (
         <Profile
             name='My'
@@ -89,6 +100,9 @@ const MyProfile = () =>
             handleDelete={handleDelete}
             handleShowModal={handleShowModal}
             currentPost={currentPost}
+            handleEditWrapper={handleEditWrapper}
+            handleDeleteWrapper={handleDeleteWrapper}
+            handleShowModalWrapper={handleShowModalWrapper}
         />
     );
 };

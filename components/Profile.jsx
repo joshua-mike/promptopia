@@ -1,7 +1,7 @@
 import PromptCard from "./PromptCard";
 import ImageModal from "./ImageModal";
 
-const Profile = ({ name, desc, currentPost, data, showModal, onClose, handleEdit, handleDelete, handleShowModal }) =>
+const Profile = ({ name, desc, currentPost, data, showModal, onClose, handleEditWrapper, handleDeleteWrapper, handleShowModalWrapper }) =>
 {
   return (
     <section className="w-full">
@@ -21,9 +21,9 @@ const Profile = ({ name, desc, currentPost, data, showModal, onClose, handleEdit
           <PromptCard
             key={post._id}
             post={post}
-            handleEdit={() => handleEdit && handleEdit(post)}
-            handleDelete={() => handleDelete && handleDelete(post)}
-            handleShowModal={() => handleShowModal && handleShowModal(post)}
+            handleEdit={handleEditWrapper(post)}
+            handleDelete={handleDeleteWrapper(post)}
+            handleShowModal={handleShowModalWrapper(post)}
           />
         ))}
       </div>
