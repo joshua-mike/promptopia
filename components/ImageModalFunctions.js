@@ -21,10 +21,7 @@ export async function HandleGeneratePrediction(_prompt)
         throw new Error(prediction.detail);
     }
 
-    while (
-        prediction.status !== "succeeded" &&
-        prediction.status !== "failed"
-    )
+    while (prediction.status !== "succeeded" && prediction.status !== "failed")
     {
         console.log("Waiting for prediction to complete");
         await new Promise(resolve => setTimeout(resolve, 1000));

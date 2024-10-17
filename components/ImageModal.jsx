@@ -10,7 +10,7 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
     {
         const handleEsc = (event) =>
         {
-            if (event.keyCode === 27)
+            if (event.key === 'Escape')
             {
                 onClose();
             }
@@ -41,15 +41,15 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
 
     return (
         <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-50' onClick={onClose}>
-            <div className='w-[600px]' onClick={e => e.stopPropagation()}>
+            <div className='w-[1024px]' onClick={e => e.stopPropagation()}>
                 <div className='prompt_card'>
                     {prediction ? (
                         <Image
                             src={prediction.output[0]}
                             alt='generated image'
                             layout='responsive'
-                            width={768}
-                            height={768}
+                            width={1024}
+                            height={968}
                         />
                     ) : (
                         <p>Generating image...</p>
