@@ -43,7 +43,7 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
         <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-50' onClick={onClose}>
             <div className='w-[1024px]' onClick={e => e.stopPropagation()}>
                 <div className='prompt_card'>
-                    {prediction ? (
+                    {prediction && prediction.status === "succeeded" ? (
                         <Image
                             src={prediction.output[0]}
                             alt='generated image'
@@ -51,6 +51,8 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
                             width={1024}
                             height={968}
                         />
+                    ) : prediction && prediction.status === "failed" ? (
+                        <p>{prediction.detail}</p>
                     ) : (
                         <p>Generating image...</p>
                     )}

@@ -18,7 +18,7 @@ export async function HandleGeneratePrediction(_prompt)
     if (response.status !== 201)
     {
         console.log("Replicate API error:", prediction.detail);
-        throw new Error(prediction.detail);
+        return prediction;
     }
 
     while (prediction.status !== "succeeded" && prediction.status !== "failed")
@@ -29,7 +29,7 @@ export async function HandleGeneratePrediction(_prompt)
         prediction = await response.json();
         if (response.status !== 200)
         {
-            throw new Error(prediction.detail);
+            return prediction.detail = "Error: " + response.statusText;
         }
         console.log("While loop prediction status:", prediction.status);
     }
