@@ -5,18 +5,19 @@ import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 
 
-const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
+const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, handleShowModal }) =>
 {
   const { data: session } = useSession();
   const router = useRouter();
   const pathName = usePathname();
   const [copied, setCopied] = useState("");
+  var prompt = post.prompt;
+
   const handleProfileClick = () =>
   {
     if (post.creator._id === session?.user.id)
     {
       console.log(`Logged in user ID: ${post.creator._id} Name: ${post.creator.username}`);
-      //router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
       return router.push('/profile')
     }
     else if (post.creator._id !== session?.user.id)
@@ -58,7 +59,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
 
         <div className='copy_btn' onClick={handleCopy}>
           <Image
-            src={copied === post.prompt ? 'assets/icons/tick.svg' : 'assets/icons/copy.svg'}
+            src={copied === prompt ? 'assets/icons/tick.svg' : 'assets/icons/copy.svg'}
             alt='user_image'
             width={12}
             height={12}
@@ -66,7 +67,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
         </div>
       </div>
       <p className='my-4 font-satoshi text-sm text-gray-700'>
-        {post.prompt}
+        {prompt}
       </p>
       <p className='font-inter text-sm blue_gradient cursor-pointer' onClick={() => handleTagClick && handleTagClick(post.tag)}>
         #{post.tag}
@@ -77,6 +78,9 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) =>
             className='font-inter text-sm green_gradient cursor-pointer'
             onClick={handleEdit}
           >Edit</p>
+          <p className='font-inter text-sm blue_gradient cursor-pointer'
+            onClick={() => handleShowModal(post)}
+          >Generate Image</p>
           <p
             className='font-inter text-sm orange_gradient cursor-pointer'
             onClick={handleDelete}
