@@ -1,3 +1,5 @@
+"use Client";
+
 import { set } from "mongoose";
 import { useState } from "react";
 
@@ -26,13 +28,17 @@ export async function HandleGeneratePrediction(_prompt)
         console.log("Waiting for prediction to complete");
         await new Promise(resolve => setTimeout(resolve, 1000));
         response = await fetch("/api/predictions/" + prediction.id);
-        prediction = await response.json();
+        console.log("Prediction response status:", response.status)
+        console.log("Response", response)
+
         if (response.status !== 200)
         {
-            return prediction.detail = "Error: " + response.statusText;
+            console.log("While loop prediction response failed:", response.statusText);
+            return response.statusText;
         }
         console.log("While loop prediction status:", prediction.status);
     }
 
+    prediction = await response.json();
     return prediction;
 }

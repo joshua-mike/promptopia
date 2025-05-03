@@ -5,6 +5,7 @@ import Image from 'next/image';
 const ImageModal = React.memo(({ show, onClose, prompt }) =>
 {
     const [prediction, setPrediction] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() =>
     {
@@ -29,6 +30,7 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
                 setPrediction(result);
             }).catch(error =>
             {
+                setError(error);
                 console.error('Error generating prediction:', error);
             });
         }
@@ -53,7 +55,7 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
                         />
                     ) : prediction && prediction.status === "failed" ? (
                         <p>{prediction.detail}</p>
-                    ) : (
+                    ) : error ? (<p>{error}</p>) : (
                         <p>Generating image...</p>
                     )}
                 </div>
