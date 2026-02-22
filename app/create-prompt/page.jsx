@@ -16,12 +16,11 @@ const CreatePrompt = () =>
     });
     const createPrompt = async (e) =>
     {
-        //e.PreventDefault();
+        e.preventDefault();
         setSubmitting(true);
 
         try
         {
-            console.log("Executing createPrompt...");
             const response = await fetch("/api/prompt/new", {
                 method: "POST",
                 body: JSON.stringify({
@@ -35,13 +34,11 @@ const CreatePrompt = () =>
             {
                 router.push('/');
             }
-            console.log(response.stringify());
 
             setPost({
                 prompt: '',
                 tag: '',
             });
-            setSubmitting(false);
         }
         catch (error)
         {
@@ -50,7 +47,6 @@ const CreatePrompt = () =>
         finally
         {
             setSubmitting(false);
-            console.log("createPrompt executed.");
         }
     }
     return (

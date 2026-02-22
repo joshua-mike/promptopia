@@ -125,7 +125,7 @@ const Nav = () =>
                   type="button"
                   onClick={() =>
                   {
-                    signIn("email");
+                    signIn(provider.id);
                   }}
                   key={provider.name}
                   className="black_btn"

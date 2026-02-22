@@ -24,7 +24,6 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
     {
         if (show && prompt)
         {
-            console.log('Generating replicate prediction for prompt:', prompt);
             HandleGeneratePrediction(prompt).then(result =>
             {
                 setPrediction(result);
@@ -49,7 +48,6 @@ const ImageModal = React.memo(({ show, onClose, prompt }) =>
                         <Image
                             src={prediction.output[0]}
                             alt='generated image'
-                            layout='responsive'
                             width={1024}
                             height={968}
                         />

@@ -41,12 +41,11 @@ const Feed = () =>
     {
       const filteredPrompt = filteredPosts(input.target.value);
       setSearchedResults(filteredPrompt);
-    }, 1))
+    }, 300))
   };
 
   const filteredPosts = (text) =>
   {
-    console.log("Searched text", text);
     const regex = new RegExp(text, 'i');
     return posts.filter((post) =>
       regex.test(post.prompt)
@@ -62,7 +61,7 @@ const Feed = () =>
     {
       const filteredPrompt = filteredPosts(tag);
       setSearchedResults(filteredPrompt);
-    }, 1))
+    }, 300))
   }
 
   useEffect(() =>
