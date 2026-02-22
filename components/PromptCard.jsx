@@ -1,4 +1,4 @@
-"use Client";
+"use client";
 import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -17,12 +17,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, handleShow
   {
     if (post.creator._id === session?.user.id)
     {
-      console.log(`Logged in user ID: ${post.creator._id} Name: ${post.creator.username}`);
       return router.push('/profile')
     }
     else if (post.creator._id !== session?.user.id)
     {
-      console.log(`Visiting user ID: ${post.creator._id} Name: ${post.creator.username}`);
       return router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
     }
 

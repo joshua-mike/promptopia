@@ -21,9 +21,9 @@ const Profile = ({ name, desc, currentPost, data, showModal, onClose, handleEdit
           <PromptCard
             key={post._id}
             post={post}
-            handleEdit={handleEditWrapper(post)}
-            handleDelete={handleDeleteWrapper(post)}
-            handleShowModal={handleShowModalWrapper(post)}
+            handleEdit={handleEditWrapper ? handleEditWrapper(post) : undefined}
+            handleDelete={handleDeleteWrapper ? handleDeleteWrapper(post) : undefined}
+            handleShowModal={handleShowModalWrapper ? handleShowModalWrapper(post) : undefined}
           />
         ))}
       </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 const Form = ({ type, post, setPost, submitting, setSubmitting, handleSubmit }) => 
@@ -39,7 +41,7 @@ const Form = ({ type, post, setPost, submitting, setSubmitting, handleSubmit }) 
             Cancel
           </Link>
           <button type="submit" disabled={submitting} className="px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white">
-            {submitting ? '{type}...' : type}
+            {submitting ? `${type}...` : type}
           </button>
 
 

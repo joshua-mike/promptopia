@@ -25,48 +25,36 @@ const MyProfile = () =>
 
     }, [session?.user.id]);
 
-    const handleEdit = (posts) =>
+    const handleEdit = (post) =>
     {
-        router.push(`/update-prompt?id=${posts._id}`);
+        router.push(`/update-prompt?id=${post._id}`);
     };
 
     const handleShowModal = useCallback((post) =>
     {
         setCurrentPost(post);
         setShowModal(true);
-        console.log('Attempting to show modal.');
     }, []);
 
     const onClose = useCallback(() =>
     {
         setShowModal(false);
         setCurrentPost(null);
-        console.log('Modal closed.');
     }, []);
 
-    const handleDelete = async (posts) =>
+    const handleDelete = async (post) =>
     {
-        const hasConfirmed = confirm('Are you sure you want to delete this pompt?');
+        const hasConfirmed = confirm('Are you sure you want to delete this prompt?');
 
         if (hasConfirmed)
         {
             try
             {
-                await fetch(`/api/prompt/${posts._id.toString()}`, {
+                await fetch(`/api/prompt/${post._id.toString()}`, {
                     method: 'DELETE'
                 });
 
-                if (Array.isArray(posts))
-                {
-                    const filteredPosts = posts.filter((p) => p._id !== posts._id);
-                    setPosts(filteredPosts);
-                }
-                else
-                {
-                    console.log('Posts variable is not an array.');
-                    setPosts([]);
-                }
-
+                setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id));
             } catch (error)
             {
                 console.log('Failed to delete prompt', error);
